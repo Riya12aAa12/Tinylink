@@ -4,9 +4,9 @@ import { isValidCode } from "@/lib/code";
 
 export async function GET(
   request: NextRequest,
-  context: { params: { code: string } }
+  { params }: { params: { code: string } }
 ) {
-  const { code } = context.params;
+  const { code } = params;
 
   if (!isValidCode(code)) {
     return NextResponse.json({ message: "Invalid code" }, { status: 404 });
@@ -23,7 +23,5 @@ export async function GET(
     console.error("Failed to record click", error);
   }
 
-  return NextResponse.redirect(link.url, {
-    status: 302,
-  });
+  return NextResponse.redirect(link.url, { status: 302 });
 }
